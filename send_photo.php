@@ -12,11 +12,11 @@
             $errorMessage = 'Вы уже загружали фото ранее';
         } else {
             try {
-                echo '0';
                 if ($_FILES['photo']['type'] === 'image/jpeg' || $_FILES['photo']['type'] === 'image/png') {
-                    echo '1';
                     if ($_FILES['photo']['size'] < 2048000) {
-                        echo '2';
+                        if (!file_exists('storage')) {
+                            mkdir('images');
+                        }
                         $newFileAddress = './images/' . $_FILES['photo']['name'];
                         move_uploaded_file($_FILES['photo']['tmp_name'], $newFileAddress);
                         $_SESSION['upload_count']++;
@@ -25,7 +25,6 @@
                         $errorMessage = 'Допускается загрузка файлов размером не более 2Mb.';
                     }
                 } else {
-                    echo '3';
                     $errorMessage = 'Допускается загрузка только JPG/PNG файлов.';
                 }
             } catch (Exception $e) {
