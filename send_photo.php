@@ -4,11 +4,7 @@ session_start();
 $errorMessage;
 
 if (isset($_POST['upload'])) {
-    if (!isset($_SESSION['upload_count'])) {
-        $_SESSION['upload_count'] = 0;
-    }
-
-    if ($_SESSION['upload_count'] > 0) {
+    if (isset($_SESSION['upload_count'])) {
         $errorMessage = 'Вы уже загружали фото ранее';
     } else {
         try {
@@ -18,7 +14,7 @@ if (isset($_POST['upload'])) {
                 }
                 $newFileAddress = './images/' . $_FILES['photo']['name'];
                 move_uploaded_file($_FILES['photo']['tmp_name'], $newFileAddress);
-                $_SESSION['upload_count']++;
+                $_SESSION['upload_count'] = 1;
                 header('Location: ' . $newFileAddress);
             } else {
                 $errorMessage = 'Допускается загрузка только JPG/PNG файлов размером не более 2Mb.';
