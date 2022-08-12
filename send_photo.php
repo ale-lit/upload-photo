@@ -37,9 +37,11 @@ if (isset($_POST['upload'])) {
 </head>
 <body>
     <div class="container mt-3">
-        <?php if (isset($errorMessage)) {
-            echo "<div class='alert alert-danger' role='alert'>{$errorMessage}</div>";
-        } ?>
+        <?php 
+            if (isset($errorMessage)) {
+                echo "<div class='alert alert-danger' role='alert'>{$errorMessage}</div>";
+            }
+        ?>
         <div class="card p-4">
             <form action="" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="upload" value="1">
