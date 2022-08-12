@@ -16,6 +16,7 @@ if (isset($_POST['upload'])) {
                 move_uploaded_file($_FILES['photo']['tmp_name'], $newFileAddress);
                 $_SESSION['upload_count'] = 1;
                 header('Location: ' . $newFileAddress);
+                exit;
             } else {
                 $errorMessage = 'Допускается загрузка только JPG/PNG файлов размером не более 2Mb.';
             }
