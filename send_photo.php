@@ -12,20 +12,16 @@ if (isset($_POST['upload'])) {
         $errorMessage = 'Вы уже загружали фото ранее';
     } else {
         try {
-            if ($_FILES['photo']['type'] === 'image/jpeg' || $_FILES['photo']['type'] === 'image/png') {
-                if ($_FILES['photo']['size'] < 2048000) {
-                    if (!file_exists('storage')) {
-                        mkdir('images');
-                    }
-                    $newFileAddress = './images/' . $_FILES['photo']['name'];
-                    move_uploaded_file($_FILES['photo']['tmp_name'], $newFileAddress);
-                    $_SESSION['upload_count']++;
-                    header('Location: ' . $newFileAddress);
-                } else {
-                    $errorMessage = 'Допускается загрузка файлов размером не более 2Mb.';
+            if (($_FILES['photo']['type'] === 'image/jpeg' || $_FILES['photo']['type'] === 'image/png') && $_FILES['photo']['size'] < 2048000) {
+                if (!file_exists('storage')) {
+                    mkdir('images');
                 }
+                $newFileAddress = './images/' . $_FILES['photo']['name'];
+                move_uploaded_file($_FILES['photo']['tmp_name'], $newFileAddress);
+                $_SESSION['upload_count']++;
+                header('Location: ' . $newFileAddress);
             } else {
-                $errorMessage = 'Допускается загрузка только JPG/PNG файлов.';
+                $errorMessage = 'Допускается загрузка только JPG/PNG файлов размером не более 2Mb.';
             }
         } catch (Exception $e) {
             echo $e->getMessage();
